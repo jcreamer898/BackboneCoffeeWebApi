@@ -1,0 +1,37 @@
+@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
+    <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
+
+@*    @{*@
+@*        var bundle = new Bundle("~/build/", new JsMinify());*@
+@*        bundle.AddFile("~/scripts/jquery-1.7.1.js");*@
+@*        bundle.AddFile("~/scripts/underscore.js");*@
+@*        bundle.AddFile("~/scripts/backbone.js");*@
+@*        bundle.AddFile("~/scripts/app.js");*@
+@*        BundleTable.Bundles.Add(bundle);*@
+@*    }*@
+@*    <script src="/build/"></script>*@
+    <script src="~/scripts/jquery-1.7.1.js"></script>
+    <script src="~/scripts/underscore.js"></script>
+    <script src="~/scripts/backbone.js"></script>
+    <script src="~/scripts/handlebars.js"></script>
+    <script src="~/scripts/app.js"></script>
+</head>
+<body>
+    @RenderBody()
+    <script id="customer" type="text/html">
+        <div>
+            {{ FirstName }}
+            {{ LastName }}
+            {{ Email }}
+        </div>
+    </script>
+</body>
+</html>
+
