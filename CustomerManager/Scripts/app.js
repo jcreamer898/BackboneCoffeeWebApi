@@ -95,6 +95,7 @@
     __extends(CustomerEdit, _super);
 
     function CustomerEdit() {
+      this.showError = __bind(this.showError, this);
       this.cancel = __bind(this.cancel, this);
       this.save = __bind(this.save, this);
       this.render = __bind(this.render, this);
@@ -124,6 +125,7 @@
       data = this.model.toJSON();
       html = this.template(data);
       this.$el.html(html).show().find('#first').focus();
+      this.model.on('error', this.showError);
       return this;
     };
 
@@ -136,16 +138,22 @@
         'Birthday': this.$el.find('#birthday').val(),
         'Description': this.$el.find('#description').val()
       });
-      if (!!this.model.isNew()) window.customers.add(this.model);
-      $('.alert').fadeIn();
-      this.model.save({
-        wait: true
-      });
-      return this.$el.hide();
+      if (this.model.isValid()) {
+        $('.alert').fadeOut();
+        if (!!this.model.isNew()) window.customers.add(this.model);
+        this.model.save({
+          wait: true
+        });
+        return this.$el.hide();
+      }
     };
 
     CustomerEdit.prototype.cancel = function() {
       return this.$el.hide();
+    };
+
+    CustomerEdit.prototype.showError = function(model, error) {
+      return $('.alert').html(error).fadeIn('fast');
     };
 
     return CustomerEdit;
@@ -171,12 +179,19 @@
     __extends(Customer, _super);
 
     function Customer() {
+      this.validate = __bind(this.validate, this);
       Customer.__super__.constructor.apply(this, arguments);
     }
 
     Customer.prototype.urlRoot = '/api/customers/';
 
     Customer.prototype.idAttribute = 'Id';
+
+    Customer.prototype.validate = function(attr) {
+      if (!attr.FirstName) return "First Name is required";
+      if (!attr.LastName) return "Last Name is required";
+      if (!attr.Email) return "Email Address is required";
+    };
 
     return Customer;
 
