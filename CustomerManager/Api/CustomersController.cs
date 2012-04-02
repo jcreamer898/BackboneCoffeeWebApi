@@ -30,17 +30,19 @@ namespace CustomerManager.Controllers
         }
 
         // POST /api/customers
-        public void Post(Customer customer)
+        public Customer Post(Customer customer)
         {
             _managerContext.Customers.Add(customer);
             _managerContext.SaveChanges();
+            return customer;
         }
 
         // PUT /api/customers/5
-        public void Put(int id, Customer customer)
+        public Customer Put(int id, Customer customer)
         {
             _managerContext.Entry(customer).State = EntityState.Modified;
             _managerContext.SaveChanges();
+            return customer;
         }
 
         // DELETE /api/customers/5

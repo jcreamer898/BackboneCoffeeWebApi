@@ -1,37 +1,52 @@
 @using System.Web.Optimization
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
-    <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        <link href="../../Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../Content/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../Content/css/Site.css" rel="stylesheet" type="text/css" />
+        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
 
-@*    @{*@
-@*        var bundle = new Bundle("~/build/", new JsMinify());*@
-@*        bundle.AddFile("~/scripts/jquery-1.7.1.js");*@
-@*        bundle.AddFile("~/scripts/underscore.js");*@
-@*        bundle.AddFile("~/scripts/backbone.js");*@
-@*        bundle.AddFile("~/scripts/app.js");*@
-@*        BundleTable.Bundles.Add(bundle);*@
-@*    }*@
-@*    <script src="/build/"></script>*@
-    <script src="~/scripts/jquery-1.7.1.js"></script>
-    <script src="~/scripts/underscore.js"></script>
-    <script src="~/scripts/backbone.js"></script>
-    <script src="~/scripts/handlebars.js"></script>
-    <script src="~/scripts/app.js"></script>
-</head>
-<body>
-    @RenderBody()
-    <script id="customer" type="text/html">
-        <div>
-            {{ FirstName }}
-            {{ LastName }}
-            {{ Email }}
+        @*    @{*@
+        @*        var bundle = new Bundle("~/build/", new JsMinify());*@
+        @*        bundle.AddFile("~/scripts/jquery-1.7.1.js");*@
+        @*        bundle.AddFile("~/scripts/underscore.js");*@
+        @*        bundle.AddFile("~/scripts/backbone.js");*@
+        @*        bundle.AddFile("~/scripts/app.js");*@
+        @*        BundleTable.Bundles.Add(bundle);*@
+        @*    }*@
+        @*    <script src="/build/"></script>*@
+        <script src="~/scripts/jquery-1.7.1.js"> </script>
+        <script src="~/scripts/underscore.js"> </script>
+        <script src="~/scripts/backbone.js"> </script>
+        <script src="~/scripts/handlebars.js"> </script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/bootstrap-alert.js" type="text/javascript"></script>
+        <script src="~/scripts/app.js"> </script>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Project name</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">Source</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
         </div>
-    </script>
-</body>
+        @RenderBody()
+    </body>
 </html>
-

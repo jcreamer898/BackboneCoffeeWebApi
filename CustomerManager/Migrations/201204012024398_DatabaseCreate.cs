@@ -2,7 +2,7 @@ namespace CustomerManager.Migrations
 {
     using System.Data.Entity.Migrations;
     
-    public partial class FirstDatabase : DbMigration
+    public partial class DatabaseCreate : DbMigration
     {
         public override void Up()
         {
@@ -16,7 +16,6 @@ namespace CustomerManager.Migrations
                         Email = c.String(nullable: false),
                         Phone = c.String(),
                         Description = c.String(),
-                        Birthday = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

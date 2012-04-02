@@ -1,3 +1,5 @@
+using CustomerManager.Models;
+
 namespace CustomerManager.Migrations
 {
     using System;
@@ -26,6 +28,14 @@ namespace CustomerManager.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            context.Customers.Add(new Customer
+                                      {
+                                          FirstName = "Jonathan",
+                                          LastName = "Creamer",
+                                          Description = "Awesome",
+                                          Email = "matrixhasyou2k4@gmail.com",
+                                          Phone = "6153021220"
+                                      });
         }
     }
 }

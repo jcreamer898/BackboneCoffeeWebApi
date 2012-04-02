@@ -2,7 +2,54 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<div id="customerList">
+<div class="container">
     
+    <div class="hero-unit">
+        <h2>Customer List</h2>
+        This demo app is built with Backbone.js, written in CoffeScript, and
+        supported in the back end by ASP.net MVC4, and the Web API.
+    </div>
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="span6">
+            <div class="alert alert-success fade in">
+                Saved!
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+            </div>
+            <table id="customerList">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Manage</th>
+                </tr>
+            </table>
+            <a class="btn btn-primary btn-large" id="add">Add</a>
+        </div>
+        <div class="span6">
+            <div id="customerEdit"></div>
+        </div>
+    </div>
 </div>
+
+
+<script id="customerEditTemplate" type="text/html">
+    <input type="hidden" name="id" id="id" value="{{Id}}"/>
+    <input type="text" name="first" id="first" value="{{FirstName}}" placeholder="First Name"/>
+    <input type="text" name="last" id="last" value="{{LastName}}" placeholder="Last Name"/>
+    <input type="email" name="email" id="email" value="{{Email}}" placeholder="Email"/>
+    <input type="text" name="phone" id="phone" value="{{Phone}}" placeholder="Phone"/>
+    <textarea name="description" id="description">{{Description}}</textarea>
+    <a class="btn btn-primary btn-large" id="save">Save</a>
+    <a class="btn btn-primary btn-large" id="cancel">Cancel</a>
+</script>
+
+<script id="customer" type="text/html">
+    <td>{{ FirstName }}</td>
+    <td>{{ LastName }}</td>
+    <td>{{ Email }}</td>
+    <td colspan="2">
+        <a href="#edit" class="edit" data-id="{{Id}}"><i class="icon-pencil"></i></a>
+        <a href="#remove" class="remove" data-id="{{Id}}"><i class="icon-remove"></i></a>
+    </td>0101
+</script>

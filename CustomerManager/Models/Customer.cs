@@ -19,7 +19,5 @@ namespace CustomerManager.Models
         public string Phone { get; set; }
 
         public string Description { get; set; }
-
-        public DateTime Birthday { get; set; }
     }
 }

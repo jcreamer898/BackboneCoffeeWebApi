@@ -59,3 +59,7 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+
+#customerList td { width: 150px; }
+#customerList th { font-weight: bold}
+.alert {display:none;}
