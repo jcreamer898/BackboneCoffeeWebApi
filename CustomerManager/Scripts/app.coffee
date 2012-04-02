@@ -55,7 +55,8 @@ class CustomerEdit extends Backbone.View
 		html = @template data
 		@$el.html(html).show()
 			.find('#first').focus()
-
+		
+		@model.on 'error', @showError
 		return this;
 	save: (event) =>
 		@model.set
@@ -65,16 +66,17 @@ class CustomerEdit extends Backbone.View
 			'Phone': @$el.find('#phone').val()
 			'Birthday': @$el.find('#birthday').val()
 			'Description': @$el.find('#description').val()
-			
-		window.customers.add @model unless !@model.isNew()
-		$('.alert').fadeIn()
-
-		@model.save
-			wait: true	
-		@$el.hide()
+		if @model.isValid()			
+			$('.alert').fadeOut()
+			window.customers.add @model unless !@model.isNew()
+			@model.save
+				wait: true	
+			@$el.hide()
 	cancel: =>
 		@$el.hide()		
-		
+	showError: (model, error) =>        
+        $('.alert').html(error).fadeIn('fast');
+			
 
 class Vent extends Backbone.Events
 window.Vent = Vent
@@ -82,6 +84,13 @@ window.Vent = Vent
 class Customer extends Backbone.Model
 	urlRoot: '/api/customers/'
 	idAttribute: 'Id'
+	validate: (attr) =>
+		if !attr.FirstName 
+			return "First Name is required"
+		if !attr.LastName 
+			return "Last Name is required"
+		if !attr.Email 
+			return "Email Address is required"
 
 class Customers extends Backbone.Collection
     url: '/api/customers/'
