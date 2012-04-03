@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Json;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CustomerManager.Models;
@@ -30,19 +32,29 @@ namespace CustomerManager.Controllers
         }
 
         // POST /api/customers
-        public Customer Post(Customer customer)
+        public HttpResponseMessage Post(Customer customer)
         {
+            JsonArray errors = ParseErrors();
+            if (errors.Count > 0)
+            {
+                return new HttpResponseMessage<JsonValue>(errors, HttpStatusCode.Forbidden);
+            }
             _managerContext.Customers.Add(customer);
             _managerContext.SaveChanges();
-            return customer;
+            return new HttpResponseMessage<Customer>(customer);
         }
 
         // PUT /api/customers/5
-        public Customer Put(int id, Customer customer)
+        public HttpResponseMessage Put(int id, Customer customer)
         {
+            JsonArray errors = ParseErrors();
+            if(errors.Count > 0)
+            {
+                return new HttpResponseMessage<JsonValue>(errors, HttpStatusCode.Forbidden);
+            }
             _managerContext.Entry(customer).State = EntityState.Modified;
             _managerContext.SaveChanges();
-            return customer;
+            return new HttpResponseMessage<Customer>(customer);
         }
 
         // DELETE /api/customers/5
@@ -51,6 +63,24 @@ namespace CustomerManager.Controllers
             var customer = _managerContext.Customers.SingleOrDefault(c => c.Id == id);
             _managerContext.Customers.Remove(customer);
             _managerContext.SaveChanges();
+        }
+
+        private JsonArray ParseErrors()
+        {
+            var errors = new JsonArray();
+            // Validate movie
+            if (!ModelState.IsValid)
+            {
+                
+                foreach (var prop in ModelState.Values)
+                {
+                    if (prop.Errors.Any())
+                    {
+                        errors.Add(prop.Errors.First().ErrorMessage);
+                    }
+                }
+            }
+            return errors;
         }
     }
 }

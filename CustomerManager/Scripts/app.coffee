@@ -22,7 +22,7 @@ class CustomerItem extends Backbone.View
         @render()
         return this
     events:
-        'click .remove': 'delete',
+        'click .remove': 'deleteItem',
         'click .edit': 'showEdit'
     render: =>
         html = @template @model.toJSON()
@@ -32,9 +32,11 @@ class CustomerItem extends Backbone.View
 		event.preventDefault()
 		Vent.trigger 'edit', @model
 		return this
-	delete: =>
+	deleteItem: =>
 		@model.destroy()
+		@$.fadeOut 'fast'
 		@remove()
+		messages.success 'Deleted!'
 		return this
 
 
@@ -59,24 +61,28 @@ class CustomerEdit extends Backbone.View
 		@model.on 'error', @showError
 		return this;
 	save: (event) =>
-		@model.set
+		@model.save	
 			'FirstName': @$el.find('#first').val()
 			'LastName': @$el.find('#last').val()
 			'Email': @$el.find('#email').val()
 			'Phone': @$el.find('#phone').val()
 			'Birthday': @$el.find('#birthday').val()
 			'Description': @$el.find('#description').val()
-		if @model.isValid()			
-			$('.alert').fadeOut()
-			window.customers.add @model unless !@model.isNew()
-			@model.save
-				wait: true	
-			@$el.hide()
+		,
+			wait: true
+			success: =>
+				messages.success 'Saved!'
+				window.customers.add @model unless window.customers.any( (customer) =>  
+					return customer.get('Id') is @model.get('Id');
+				)
+                
+				@$el.hide()
+		return this
 	cancel: =>
 		@$el.hide()		
 	showError: (model, error) =>        
-        $('.alert').html(error).fadeIn('fast');
-			
+		error = JSON.parse(error.responseText).join '<br \>' if (typeof error is 'object')
+		messages.error error
 
 class Vent extends Backbone.Events
 window.Vent = Vent
@@ -96,6 +102,20 @@ class Customers extends Backbone.Collection
     url: '/api/customers/'
     model: Customer    
 
+class MessageManager extends Backbone.View
+    el: '.alert'
+    render: (type, message, opts) =>
+        defaults =
+            fade: 3000
+        _.extend defaults, opts
+        typeClass = "alert alert-#{type}";
+        @$el.empty().prepend(message).removeClass().addClass(typeClass).fadeIn 'fast'
+        setTimeout (=> @$el.fadeOut()), defaults.fade
+    error: (message, opts) =>
+        @render 'error', message, opts unless !message
+    success: (message, opts) =>
+        @render 'success', message, opts unless !message
+
 $ -> 
     window.customers = new Customers
     edit = new CustomerEdit()
@@ -106,3 +126,4 @@ $ ->
     $('#add').click ->
         Vent.trigger 'edit'
     $(".alert").alert()
+    window.messages = new MessageManager()

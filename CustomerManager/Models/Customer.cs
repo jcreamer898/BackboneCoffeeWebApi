@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DataAnnotationsExtensions;
 
 namespace CustomerManager.Models
 {
@@ -14,6 +15,7 @@ namespace CustomerManager.Models
         public string LastName { get; set; }
         
         [Required]
+        [Email]
         public string Email { get; set; }
 
         public string Phone { get; set; }
