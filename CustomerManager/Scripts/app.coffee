@@ -34,7 +34,7 @@ class CustomerItem extends Backbone.View
 		return this
 	deleteItem: =>
 		@model.destroy()
-		@$.fadeOut 'fast'
+		@$el.fadeOut 'fast'
 		@remove()
 		messages.success 'Deleted!'
 		return this

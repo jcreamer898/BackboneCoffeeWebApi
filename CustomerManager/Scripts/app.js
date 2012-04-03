@@ -82,7 +82,7 @@
 
     CustomerItem.prototype.deleteItem = function() {
       this.model.destroy();
-      this.$.fadeOut('fast');
+      this.$el.fadeOut('fast');
       this.remove();
       messages.success('Deleted!');
       return this;
